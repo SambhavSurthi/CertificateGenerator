@@ -113,7 +113,7 @@ input,select,button{font:inherit}
   opacity:.92;
 }
 
-.certificate-content{position:relative;z-index:3;height:100%;padding:.7cm .8cm .28cm;isolation:auto}
+.certificate-content{position:relative;z-index:3;height:100%;padding:.8cm .85cm .4cm;isolation:auto}
 
 /* Typography */
 .school-title,.certificate-title{font-family:Cinzel,Georgia,serif}
@@ -122,8 +122,8 @@ input,select,button{font:inherit}
 
 /* Content lines */
 .certificate-line{
-  display:flex;align-items:flex-end;gap:.1cm;
-  width:100%;min-height:.72cm;white-space:nowrap;overflow:hidden
+  display:flex;align-items:flex-end;gap:.12cm;
+  width:100%;min-height:.78cm;white-space:nowrap;overflow:hidden
 }
 .certificate-line.center{justify-content:center}
 .field-line{
@@ -319,46 +319,45 @@ input,select,button{font:inherit}
         </section>
 
         <!-- BODY -->
-        <section class="body-copy" style="margin-top:.35cm;font-size:.4cm;line-height:1.15">
+        <section class="body-copy" style="margin-top:.35cm;font-size:.44cm;line-height:1.18">
 
           <p class="certificate-line center">
             <span>This is to certify that</span>
-            <span id="c-title" style="font-weight:700;font-style:normal">Master</span>
-            <span>/ Kumari</span>
-            <span class="field-line" style="width:8cm"><span class="fit-text" id="c-sname"></span></span>
+            <span id="c-title">MASTER</span>
+            <span class="field-line" style="width:12.8cm"><span class="fit-text" id="c-sname"></span></span>
           </p>
 
           <p class="certificate-line">
-            <span id="c-rel" style="font-weight:700;font-style:normal">S/o.</span>
-            <span class="field-line" style="width:8.3cm"><span class="fit-text" id="c-pname"></span></span>
+            <span id="c-rel" style="font-weight:700;font-style:normal">S/o</span>
+            <span class="field-line" style="width:11.4cm"><span class="fit-text" id="c-pname"></span></span>
             <span id="c-iswas">is</span> a bonafide student of this Institution.
           </p>
 
           <p class="certificate-line">
-            <span id="c-he">He</span> / She studying / studied from Class
-            <span class="field-line" style="width:2.2cm"><span class="fit-text" id="c-fcls"></span></span>
+            <span id="c-he">He</span> <span id="c-status-word">studying</span> from Class
+            <span class="field-line" style="width:2.45cm"><span class="fit-text" id="c-fcls"></span></span>
             Year
-            <span class="field-line" style="width:2.9cm"><span class="fit-text" id="c-fyr"></span></span>
+            <span class="field-line" style="width:3.15cm"><span class="fit-text" id="c-fyr"></span></span>
             to Class
-            <span class="field-line" style="width:2.2cm"><span class="fit-text" id="c-tcls"></span></span>
+            <span class="field-line" style="width:2.45cm"><span class="fit-text" id="c-tcls"></span></span>
             Year
-            <span class="field-line" style="width:2.9cm"><span class="fit-text" id="c-tyr"></span></span>.
+            <span class="field-line" style="width:3.15cm"><span class="fit-text" id="c-tyr"></span></span>.
           </p>
 
           <p class="certificate-line">
-            During <span id="c-his">his</span> / her study period
-            <span id="c-his2">his</span> / her character was found good.
+            During <span id="c-his">His</span> study period
+            <span id="c-his2">His</span> character was found good.
           </p>
 
           <p class="certificate-line" style="margin-top:.2cm">
             <span style="margin-left:1cm">
-              <span id="c-His">His</span> / Her date of birth according to School Admission Register is
+              <span id="c-His">His</span> date of birth according to School Admission Register is
             </span>
-            <span class="field-line" style="width:3.4cm"><span class="fit-text" id="c-dob"></span></span>
+            <span class="field-line" style="width:5.3cm"><span class="fit-text" id="c-dob"></span></span>
           </p>
 
           <p class="certificate-line">
-            <span class="field-line" style="width:14.7cm"><span class="fit-text" id="c-dobwords"></span></span>
+            <span class="field-line" style="width:19cm"><span class="fit-text" id="c-dobwords"></span></span>
           </p>
 
         </section>
@@ -484,12 +483,12 @@ function updateCert() {
   const isMale     = gender === 'M';
   const isStudying = status === 'studying';
 
-  const title = isMale ? 'Master' : 'Kumari';
-  const rel   = isMale ? 'S/o.' : 'D/o.';
+  const title = isMale ? 'MASTER' : 'Kumari';
+  const rel   = isMale ? 'S/o' : 'D/o';
   const he    = isMale ? 'He' : 'She';
-  const his   = isMale ? 'his' : 'her';
-  const His   = isMale ? 'His' : 'Her';
+  const his   = isMale ? 'His' : 'Her';
   const iswas = isStudying ? 'is' : 'was';
+  const statusWord = isStudying ? 'studying' : 'studied';
 
   $('c-adm').textContent  = adm;
   $('c-date').textContent = date;
@@ -501,9 +500,10 @@ function updateCert() {
   $('c-pname').textContent = pname;
   $('c-iswas').textContent = iswas;
   $('c-he').textContent    = he;
+  $('c-status-word').textContent = statusWord;
   $('c-his').textContent   = his;
   $('c-his2').textContent  = his;
-  $('c-His').textContent   = His;
+  $('c-His').textContent   = his;
   $('c-fcls').textContent  = fcls ? ordClass(fcls) : '';
   $('c-fyr').textContent   = fyr;
   $('c-tcls').textContent  = tcls ? ordClass(tcls) : '';
@@ -653,7 +653,7 @@ $('btn-sample').addEventListener('click', fillSample);
 window.addEventListener('resize', fitText);
 
 // Init
-update();
+updateCert();
 </script>
 </body>
 </html>
