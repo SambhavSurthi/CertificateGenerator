@@ -105,13 +105,8 @@ input,select,button{font:inherit}
 .inner-border{position:absolute;inset:.52cm;border:2.5px solid var(--gold);pointer-events:none;z-index:2}
 .ornament-border{
   position:absolute;inset:.36cm;pointer-events:none;z-index:2;
-  background:
-    radial-gradient(circle,var(--gold) 1.6px,transparent 1.9px) top/.34cm .12cm repeat-x,
-    radial-gradient(circle,var(--gold) 1.6px,transparent 1.9px) bottom/.34cm .12cm repeat-x,
-    radial-gradient(circle,var(--gold) 1.6px,transparent 1.9px) left/.12cm .34cm repeat-y,
-    radial-gradient(circle,var(--gold) 1.6px,transparent 1.9px) right/.12cm .34cm repeat-y;
-  opacity:.92;
 }
+.ornament-dots{position:absolute;inset:.36cm;pointer-events:none;z-index:2;overflow:visible;opacity:1}
 
 .certificate-content{position:relative;z-index:3;height:100%;padding:.8cm .85cm .4cm;isolation:auto}
 
@@ -277,6 +272,7 @@ input,select,button{font:inherit}
     <article id="certificate" aria-label="Bonafide Certificate">
       <div class="outer-border"></div>
       <div class="ornament-border"></div>
+      <svg id="ornament-dots" class="ornament-dots" aria-hidden="true"></svg>
       <div class="inner-border"></div>
 
       <div class="certificate-content">
@@ -450,6 +446,39 @@ function renderAadhar(val) {
   }
 }
 
+function renderOrnamentDots() {
+  const svg = $('ornament-dots');
+  if (!svg || svg.childNodes.length) return;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const box = svg.getBoundingClientRect();
+  const W = Math.round(box.width);
+  const H = Math.round(box.height);
+  const step = 13;
+  const dot = 2.6;
+  const color = '#c7963e';
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  function addDot(cx, cy) {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', cx);
+    c.setAttribute('cy', cy);
+    c.setAttribute('r', dot);
+    c.setAttribute('fill', color);
+    svg.appendChild(c);
+  }
+
+  for (let x = 0; x <= W; x += step) {
+    addDot(x, 0);
+    addDot(x, H);
+  }
+  for (let y = 0; y <= H; y += step) {
+    addDot(0, y);
+    addDot(W, y);
+  }
+}
+
 /* ── FIT TEXT ── */
 function fitText() {
   document.querySelectorAll('.fit-text').forEach(el => {
@@ -488,7 +517,7 @@ function updateCert() {
   const he    = isMale ? 'He' : 'She';
   const his   = isMale ? 'His' : 'Her';
   const iswas = isStudying ? 'is' : 'was';
-  const statusWord = isStudying ? 'studying' : 'studied';
+  const statusWord = isStudying ? 'is studying' : 'studied';
 
   $('c-adm').textContent  = adm;
   $('c-date').textContent = date;
@@ -653,6 +682,7 @@ $('btn-sample').addEventListener('click', fillSample);
 window.addEventListener('resize', fitText);
 
 // Init
+renderOrnamentDots();
 updateCert();
 </script>
 </body>
